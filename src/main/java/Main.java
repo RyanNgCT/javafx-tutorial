@@ -28,8 +28,12 @@ public class Main extends Application {
         userInput = new TextField();
         sendButton = new Button("Send!");
 
-        DialogBox dialogBox = new DialogBox("Hello!", userImage);
-        dialogContainer.getChildren().add(dialogBox);
+        sendButton.setOnMouseClicked((event) -> {
+            handleUserInput();
+        });
+        userInput.setOnAction((event) -> {
+            handleUserInput();
+        });
 
         AnchorPane mainLayout = new AnchorPane();
         mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
@@ -53,6 +57,7 @@ public class Main extends Application {
         scrollPane.setFitToWidth(true);
 
         dialogContainer.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
 
         userInput.setPrefWidth(325.0);
 
@@ -68,5 +73,10 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void handleUserInput() {
+        dialogContainer.getChildren().addAll(new DialogBox(userInput.getText(), userImage));
+        userInput.clear();
     }
 }

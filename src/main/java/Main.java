@@ -24,6 +24,9 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             stage.setTitle("Duke Chat");
+            stage.setMinHeight(420);
+            stage.setMinWidth(420);
+
             fxmlLoader.<MainWindow>getController().setDuke(duke);
             stage.show();
         } catch (IOException e) {

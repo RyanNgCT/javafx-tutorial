@@ -13,7 +13,7 @@
     -fx-font: italic bold 16px "Arial";
 }
 
-.button:pressed {
+.button:hover {
     -fx-background-color:orange;
     -fx-font-size: 20px;
 }
@@ -29,8 +29,12 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #ff9cb4;
+    /*-fx-background-color: #ff9cb4;*/
     -fx-background-radius: 1em;
+}
+
+.scroll-bar:hover {
+    -fx-background-color: #d9ffe2;
 }
 
 /* Hides the increment and decrement buttons. */

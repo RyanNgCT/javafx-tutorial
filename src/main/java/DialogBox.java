@@ -1,38 +1,46 @@
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
+import java.io.IOException;
+import java.util.Collections;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 
 public class DialogBox extends HBox {
+    @FXML
     private ImageView displayPicture;
-    private Label text;
+
+    @FXML
+    private Label dialog;
 
     public DialogBox(String strInput, Image img) {
-        text = new Label(strInput);
-        displayPicture = new ImageView(img);
-
-        text.setWrapText(true);
-        displayPicture.setFitWidth(100.0);
-        displayPicture.setFitHeight(100.0);
-        this.setAlignment(Pos.TOP_RIGHT);
-
-
-        this.getChildren().addAll(text, displayPicture);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            fxmlLoader.setController(this);
+            fxmlLoader.setRoot(this);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        dialog.setText(strInput);
+        displayPicture.setImage(img);
     }
 
     /**
      * Flips the dialog box such that the ImageView is on the left and text on the right.
      */
     private void flip() {
-        this.setAlignment(Pos.TOP_LEFT);
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
-        FXCollections.reverse(tmp);
-        this.getChildren().setAll(tmp);
+        Collections.reverse(tmp);
+        getChildren().setAll(tmp);
+        setAlignment(Pos.TOP_LEFT);
     }
 
     public static DialogBox getUserDialog(String s, Image i) {
@@ -40,7 +48,7 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getDukeDialog(String s, Image i) {
-        var db = new DialogBox(s, i);
+        DialogBox db = new DialogBox(s, i);
         db.flip();
         return db;
     }
